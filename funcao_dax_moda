@@ -1,0 +1,12 @@
+Moda = 
+VAR Frequencia =
+    ADDCOLUMNS(
+        SUMMARIZE(
+            Tabela,
+            Tabela[Coluna]
+        ),
+        "@Contagem", COUNTROWS(FILTER(Tabela, Tabela[Coluna] = EARLIER(Tabela[Coluna])))
+    )
+VAR MaxFrequencia = MAXX(Frequencia, [@Contagem])
+RETURN
+MAXX(FILTER(Frequencia, [@Contagem] = MaxFrequencia), Tabela[Coluna])
